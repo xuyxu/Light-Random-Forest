@@ -1,26 +1,39 @@
-# Light Random Forest
- Experimental Random Forest for Extremely Large Dataset based on Scikit-Learn.
+# Light Random Forest (lightrf)
+ Experimental Random Forest for Handling Extremely Large Dataset based on Scikit-Learn.
 
 ## Background
-Random Forest (RF) implemented in Scikit-Learn is arguably the most efficient implementation we have now.
+Random Forest (RF) in Scikit-Learn is arguably the most efficient implementation we have now. However, its training costs are still prohibitively large on extremely large datasets. For instance, more than 50GB memory is required in order to fit a `sklearn.ensemble.RandomForestClassifier` with only 100 decision trees on the HIGGS dataset (~10 million samples).
 
-However, its training costs are still prohibitively large on extremely large datasets. For instance, more than 50GB memory is required in order to fit a `sklearn.ensemble.RandomForestClassifier` with only 100 estimators on the HIGGS dataset with around 10 million samples.
+This repository contains my personal attempt on implementing a reduced version of random forest/decision tree in Scikit-Learn, which has much smaller training and evaluating costs than the original version in Scikit-Learn, especially in terms of the usage on running memory.
 
-This project contains a reduced implementation of decision tree/random forest in Scikit-Learn, which has much smaller training costs than the original implementation in Scikit-Learn, especially in terms of the memory usage. To achieve this, some basic ideas are:
-* Implement classic teachniques on accelerating decision tree, e.g., data binning ;
-* Remove properties irrelevant to the model inference on decision tree, e.g., feature importance ;
+To achieve this, some basic ideas are:
+* Implement classic teachniques for accelerating decision tree, e.g., data binning;
+* Remove properties irrelevant to the model inference on decision tree, e.g., feature importance;
 * Simplify the underlying data structure of decision tree.
+
+## Installation
+
+```
+$ git clone https://github.com/AaronX121/Light-Random-Forest.git
+$ cd Light-Random-Forest
+$ pip install -r requirements.txt
+$ python setup.py install
+```
+
+* Please see the script in `./examples` for details on how to use.
+* As a kind reminder, **an additional stage on data binning is required by lightrf**, while the remaining workflow is exactly the same as using the Random Forest in Scikit-Learn.
 
 ## Experiment Results
 * **Covtype Dataset**
     * 581,012 samples | 54 features
-    * n_estimator=500 | n_jobs=-1 | Remaining hyper-parameters are set to their default values
+    * n_estimator=500 | n_jobs=-1 | Remaining hyper-parameters were set to their default values
 * **HIGGS Dataset**
     * 11,000,000 samples | 28 features
-    * n_estimator=100 | n_jobs=-1 | Remaining hyper-parameters are set to their default values
+    * n_estimator=100 | n_jobs=-1 | Remaining hyper-parameters were set to their default values
 * **More Results**
-    * Each numerical cell in the table below denotes the results of LightRF / Scikit-Learn RF, respectively.
-    * Curves in the figure below are reported by Memory Profiler (https://github.com/pythonprofilers/memory_profiler)
+    * Each numerical cell in the table below denoted the results of LightRF / Scikit-Learn RF, respectively.
+    * Curves in the figure below were reported by Memory Profiler (https://github.com/pythonprofilers/memory_profiler)
+    * Similar results could be reproduced by running `./examples/classification_comparison.py`
 
 |      Metric Name    |   COVTYPE   |     HIGGS     |
 |:-------------------:|:-----------:|:-------------:|
@@ -30,3 +43,8 @@ This project contains a reduced implementation of decision tree/random forest in
 | Evaluating Time (s) |  1.56/1.90  |   3.01/4.77   |
 
 ![Experiment Results](./experiment.png)
+
+## Package dependencies
+* joblib>=0.11
+* Cython>=0.28.5
+* scikit-learn>=0.22
