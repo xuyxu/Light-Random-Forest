@@ -1,0 +1,10 @@
+*.pyc
+*.dat
+*.c
+*.pyd
+
+build/
+dist/
+lightrf.egg-info/
+cache/
+.idea/
