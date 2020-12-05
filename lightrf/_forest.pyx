@@ -39,9 +39,8 @@ cpdef np.ndarray _predict(object data,
         Store the splitting threshold for all internal nodes in the forest.
     children : ndarray of shape (n_internal_nodes, 2)
         Store the IDs of left and right child for all internal nodes in the
-        forest. Notice that in order to index the real left and right child,
-        its value should be added by the corresponding value in the prefix-sum
-        array ``internals_sum``. The layout of ``children`` should be C-aligned.
+        forest. Negative values in the array indicate that the corresponding
+        nodes are leaf nodes.
     value : ndarray of shape (n_leaf_nodes, n_outputs)
         Store the prediction for all leaf nodes in the forest. The layout of
         ``children`` should be C-aligned. It is declared as ``np.ndarray``

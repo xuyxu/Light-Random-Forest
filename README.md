@@ -30,9 +30,9 @@ $ python setup.py install
 * **HIGGS Dataset**
     * 11,000,000 samples | 28 features
     * n_estimator=100 | n_jobs=-1 | Remaining hyper-parameters were set to their default values
-* **More Results**
+* **Some Results**
     * Each numerical cell in the table below denoted the results of LightRF / Scikit-Learn RF, respectively.
-    * Curves in the figure below were reported by Memory Profiler (https://github.com/pythonprofilers/memory_profiler)
+    * Curves in the figure below were reported by Memory Profiler (https://github.com/pythonprofilers/memory_profiler).
     * Similar results could be reproduced by running `./examples/classification_comparison.py`
 
 |      Metric Name    |   COVTYPE   |     HIGGS     |
