@@ -56,7 +56,9 @@ from sklearn.base import clone
 from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from sklearn.base import ClassifierMixin, RegressorMixin, MultiOutputMixin
-from sklearn.utils import check_random_state, check_array, compute_sample_weight
+from sklearn.utils import (check_random_state,
+                           check_array,
+                           compute_sample_weight)
 from sklearn.exceptions import DataConversionWarning
 from sklearn.utils.fixes import _joblib_parallel_args
 from sklearn.utils.multiclass import check_classification_targets
@@ -268,7 +270,7 @@ def _accumulate_prediction(feature, threshold, children, value, X, out, lock):
 
     It can't go locally in ForestClassifier or ForestRegressor, because joblib
     complains that it cannot pickle it when placed there.
-    """    
+    """
     prediction = _predict(X, feature, threshold, children, value)
 
     with lock:
@@ -509,7 +511,7 @@ class BaseForest(MultiOutputMixin, BaseEnsemble, metaclass=ABCMeta):
             raise ValueError(
                 "sparse multilabel-indicator for y is not supported."
             )
-        
+
         if sample_weight is not None:
             sample_weight = _check_sample_weight(sample_weight, X)
 
@@ -605,7 +607,7 @@ class BaseForest(MultiOutputMixin, BaseEnsemble, metaclass=ABCMeta):
 
             # Collect newly grown trees
             for feature, threshold, children, value in rets:
-                
+
                 # No check on feature and threshold since 1-D array is always
                 # C and F-aligned.
                 self.features.append(feature)
@@ -653,7 +655,7 @@ class BaseForest(MultiOutputMixin, BaseEnsemble, metaclass=ABCMeta):
         msg = ('The property of `feature_importance` is abandoned in the'
                ' internal decision tree. Please consider to use decision'
                ' tree in scikit-learn instead.')
-        
+
         raise RuntimeError(msg)
 
 
@@ -863,7 +865,7 @@ class ForestClassifier(ClassifierMixin, BaseForest, metaclass=ABCMeta):
 
         for proba in all_proba:
             proba /= len(self.features)
-                     
+
         if len(all_proba) == 1:
             return all_proba[0]
         else:
@@ -1016,6 +1018,7 @@ class ForestRegressor(RegressorMixin, BaseForest, metaclass=ABCMeta):
         if self.n_outputs_ == 1:
             self.oob_prediction_ = \
                 self.oob_prediction_.reshape((n_samples, ))
+
 
 class RandomForestClassifier(ForestClassifier):
     """
@@ -1316,7 +1319,7 @@ class RandomForestClassifier(ForestClassifier):
         self.max_features = max_features
         self.min_impurity_decrease = min_impurity_decrease
         self.min_impurity_split = min_impurity_split
-        
+
         # Internal containers
         self.features = []
         self.thresholds = []
@@ -1891,7 +1894,7 @@ class ExtraTreesClassifier(ForestClassifier):
         self.max_features = max_features
         self.min_impurity_decrease = min_impurity_decrease
         self.min_impurity_split = min_impurity_split
-        
+
         # Internal containers
         self.features = []
         self.thresholds = []

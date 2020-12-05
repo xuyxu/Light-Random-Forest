@@ -4,14 +4,15 @@ version of RandomForestClassifier and ExtraTreesClassifier is exactly the same
 as those in Scikit-Learn.
 """
 
-import numpy as np
 from numpy.testing import assert_array_equal
 import pytest
 
 from lightrf import RandomForestClassifier
 from lightrf import ExtraTreesClassifier
-from sklearn.ensemble import RandomForestClassifier as sklearn_RandomForestClassifier
-from sklearn.ensemble import ExtraTreesClassifier as sklearn_ExtraTreesClassifier
+from sklearn.ensemble import RandomForestClassifier as \
+    sklearn_RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier as \
+    sklearn_ExtraTreesClassifier
 
 from sklearn.ensemble._hist_gradient_boosting.binning import _BinMapper
 from sklearn.model_selection import train_test_split
@@ -19,7 +20,7 @@ from sklearn.datasets import (
     load_iris,
     load_digits,
     load_wine,
-    load_breast_cancer    
+    load_breast_cancer
 )
 
 
@@ -41,13 +42,13 @@ def test_rf_proba(load_func):
     binner = _BinMapper(random_state=random_state)
     X_train_binned = binner.fit_transform(X_train)
     X_test_binned = binner.transform(X_test)
-    
+
     # Ours
     model = RandomForestClassifier(n_estimators=n_estimators,
                                    random_state=random_state)
     model.fit(X_train_binned, y_train)
     actual_proba = model.predict_proba(X_test_binned)
-    
+
     # Sklearn
     model = sklearn_RandomForestClassifier(n_estimators=n_estimators,
                                            random_state=random_state)
@@ -162,7 +163,7 @@ def test_oob_warning(load_func):
     # We need less estimators when testing the oob_decision_function_ under
     # the case that no sample is unsampled by any decision tree in the forest.
     oob_n_estimators = 5
-    
+
     X_train, y_train = load_func(return_X_y=True)
     binner = _BinMapper(random_state=random_state)
     X_train_binned = binner.fit_transform(X_train)

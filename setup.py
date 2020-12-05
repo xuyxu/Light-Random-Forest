@@ -2,11 +2,7 @@
 
 import os
 import sys
-
-import setuptools
 from setuptools import find_packages
-
-import numpy
 from numpy.distutils.core import setup
 
 
@@ -29,6 +25,7 @@ def configuration(parent_package='', top_path=None):
 
     return config
 
+
 if __name__ == "__main__":
 
     old_path = os.getcwd()
@@ -36,7 +33,7 @@ if __name__ == "__main__":
 
     os.chdir(local_path)
     sys.path.insert(0, local_path)
-    
+
     setup(configuration=configuration,
           name=DISTNAME,
           maintainer=MAINTAINER,

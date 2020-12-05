@@ -36,7 +36,7 @@ if __name__ == "__main__":
     X_train, y_train, X_test, y_test = load_covtype()
 
     # Bin the data is necessary because lightrf only handles data of the
-    # type: `np.uint8`.
+    # type `np.uint8`.
     binner = _BinMapper(random_state=random_state)
     X_train = binner.fit_transform(X_train)
     X_test = binner.transform(X_test)

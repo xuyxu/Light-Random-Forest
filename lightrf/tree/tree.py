@@ -130,7 +130,7 @@ class BaseDecisionTree(MultiOutputMixin, BaseEstimator, metaclass=ABCMeta):
         """
         check_is_fitted(self)
         return self.tree_.n_leaves
-    
+
     @property
     def n_internals(self):
         """Return the number of internal nodes of the decision tree.
@@ -368,7 +368,8 @@ class BaseDecisionTree(MultiOutputMixin, BaseEstimator, metaclass=ABCMeta):
         # Only return the essential data for using a tree for prediction
         feature = self.tree_.feature
         threshold = self.tree_.threshold
-        children = np.vstack((self.tree_.children_left, self.tree_.children_right)).T
+        children = np.vstack((self.tree_.children_left,
+                              self.tree_.children_right)).T
         value = self.tree_.value
 
         return feature, threshold, children, value
@@ -499,6 +500,7 @@ class BaseDecisionTree(MultiOutputMixin, BaseEstimator, metaclass=ABCMeta):
 # =============================================================================
 # Public estimators
 # =============================================================================
+
 
 class DecisionTreeClassifier(ClassifierMixin, BaseDecisionTree):
     """A decision tree classifier.
@@ -1135,10 +1137,10 @@ class DecisionTreeRegressor(RegressorMixin, BaseDecisionTree):
         return np.array([1] * self.n_outputs_, dtype=np.intp)
 
     def _compute_partial_dependence_recursion(self, grid, target_features):
-        msg = ('The `_compute_partial_dependence_recursion` is abandoned in the'
+        msg = ('The _compute_partial_dependence_recursion is abandoned in the'
                ' internal decision tree. Please consider to use decision tree'
                ' in scikit-learn instead.')
-        
+
         raise RuntimeError(msg)
 
 
